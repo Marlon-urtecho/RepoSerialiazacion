@@ -35,7 +35,7 @@
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(13, 182);
+            btnSave.Location = new Point(45, 248);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(115, 34);
             btnSave.TabIndex = 8;
@@ -45,7 +45,7 @@
             // 
             // btnEnter
             // 
-            btnEnter.Location = new Point(180, 182);
+            btnEnter.Location = new Point(212, 248);
             btnEnter.Name = "btnEnter";
             btnEnter.Size = new Size(115, 34);
             btnEnter.TabIndex = 9;
@@ -55,7 +55,7 @@
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(340, 182);
+            btnExit.Location = new Point(372, 248);
             btnExit.Name = "btnExit";
             btnExit.Size = new Size(115, 34);
             btnExit.TabIndex = 10;
@@ -67,12 +67,13 @@
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(471, 270);
+            ClientSize = new Size(688, 305);
             Controls.Add(btnExit);
             Controls.Add(btnEnter);
             Controls.Add(btnSave);
             Name = "frmCreateFile";
             Text = "frmCreateFile";
+            Load += frmCreateFile_Load;
             Controls.SetChildIndex(btnSave, 0);
             Controls.SetChildIndex(btnEnter, 0);
             Controls.SetChildIndex(btnExit, 0);

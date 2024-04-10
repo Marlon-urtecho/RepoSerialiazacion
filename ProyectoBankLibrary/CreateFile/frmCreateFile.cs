@@ -101,7 +101,7 @@ namespace CreateFile
 
         private void ClearTextBoxes()
         {
-            foreach(var c in this.Controls)
+            foreach (var c in this.Controls)
             {
                 if (c is TextBox)
                 {
@@ -115,13 +115,19 @@ namespace CreateFile
             try
             {
                 _fileRepository?.CloseFile();
-            }catch(IOException ex)
+            }
+            catch (IOException ex)
             {
                 MessageBox.Show(ex.Message, "Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             Application.Exit();
+        }
+
+        private void frmCreateFile_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
