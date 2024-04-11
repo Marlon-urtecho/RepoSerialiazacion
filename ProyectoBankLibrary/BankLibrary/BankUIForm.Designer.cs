@@ -137,9 +137,9 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private TextBox txtAccount;
-        private TextBox txtFirstName;
-        private TextBox txtLastName;
-        private TextBox txtBalance;
+        protected TextBox txtAccount;
+        protected TextBox txtFirstName;
+        protected TextBox txtLastName;
+        protected TextBox txtBalance;
     }
 }

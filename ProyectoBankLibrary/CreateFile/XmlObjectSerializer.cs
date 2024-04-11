@@ -24,7 +24,6 @@ namespace CreateFile
 
             using(StreamWriter write = new StreamWriter(fileName))
             {
-
                 serializer.Serialize(write, obj);
             }
         }

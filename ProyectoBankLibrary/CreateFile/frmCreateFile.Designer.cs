@@ -1,4 +1,5 @@
-﻿namespace CreateFile
+﻿
+namespace CreateFile
 {
     partial class frmCreateFile
     {
@@ -89,7 +90,7 @@
             // 
             // btnDeserializarJson
             // 
-            btnDeserializarJson.Location = new Point(282, 234);
+            btnDeserializarJson.Location = new Point(275, 234);
             btnDeserializarJson.Name = "btnDeserializarJson";
             btnDeserializarJson.Size = new Size(135, 34);
             btnDeserializarJson.TabIndex = 13;
@@ -131,6 +132,8 @@
             ResumeLayout(false);
             PerformLayout();
         }
+
+
 
         #endregion
 

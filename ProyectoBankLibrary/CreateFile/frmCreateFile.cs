@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Globalization;
 using System.Linq;
 using System.Security.Principal;
 using System.Text;
@@ -19,9 +20,11 @@ namespace CreateFile
 
         List<Cliente> clientes = new List<Cliente>();
 
+        private readonly Iserializer _serializer;
         public frmCreateFile()
         {
             InitializeComponent();
+            _serializer = new JsonObjectSerializer();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
@@ -65,19 +68,15 @@ namespace CreateFile
 
         private void btnEnter_Click(object sender, EventArgs e)
         {
-            Cliente cliente = new Cliente
-            {
+            Cliente cliente = new Cliente();
 
-                cliente.firsName = txtFirstName.Text
-                cliente.cuenta = txtAccount.Text
-                cliente.LastName = txtLastName.Text
-                cliente.saldo = txtBalance.Text
-
-            };
+            cliente.firsName = txtFirstName.Text;
+            cliente.cuenta = int.Parse(txtAccount.Text);
+            cliente.LastName = txtLastName.Text;
+            cliente.saldo = double.Parse(txtBalance.Text, CultureInfo.InvariantCulture);
 
             clientes.Add(cliente);
 
-            
             btnserializarXml.Enabled = true;
             btnSerializarJson.Enabled = true;
             ClearTextBoxes();
@@ -215,39 +214,41 @@ namespace CreateFile
             }
         }
 
-        private List<Cliente> btnDeserializarJson_Click(object sender, EventArgs e)
+        private void btnDeserializarJson_Click(object sender, EventArgs e)
         {
-            string strJson = OpenFileEmpresaJson(rutaArchivo);
-            if (strJson.Substring(0, 5) != "Falla ")
-                return JsonConvert.DeserializeObject<List<Cliente>>(strJson);
-            else
+            using (OpenFileDialog fileChooser = new OpenFileDialog())
             {
-                var lista = new List<Cliente>();
-                var empresa = new Cliente();
-                empresa.Nombre = strJson;
-                lista.Add(empresa);
-                return lista;
-            }
-        }
+                DialogResult result = fileChooser.ShowDialog();
 
-        private string OpenFileEmpresaJson(object rutaArchivo)
-        {
-            try
-            {
-                string json = "";
-                using (var fs = new FileStream(rutaArchivo, FileMode.Open, FileAccess.Read))
+                // Se asegura de que el usuario haya hecho clic en "Abrir"
+                if (result == DialogResult.OK)
                 {
-                    using (var sr = new StreamReader(fs))
+                   string fileName = fileChooser.FileName; // Obtiene la ruta del archivo seleccionado
+
+                    // Resto del código para deserializar el archivo utilizando el JsonSerializer...
+                    try
                     {
-                        json = sr.ReadToEnd();
+                        // Deserializa el archivo utilizando el JsonSerializer
+                        var obj = _serializer.Deserializable<String>(fileName); // Reemplaza 'TuTipo' con el tipo de objeto que estás deserializando
+
+                        // Muestra la información en los TextBox (o donde desees)
+                        txtAccount.Text = obj.ToString();
+                        txtFirstName.Text = obj.ToString();
+                        txtLastName.Text = obj.ToString();
+                        txtBalance.Text = obj.ToString();
+
+                        // Asigna otras propiedades de acuerdo a tu objeto
+
+                        // Deshabilita el botón "Deserializar JSON" si es necesario
+                        btnDeserializarJson.Enabled = false;
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show(ex.Message, "Error de archivo",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                return json;
-            }
-            catch (Exception ex)
-            {
 
-                return "Falla: " + ex.Message;
             }
         }
     }
