@@ -231,14 +231,20 @@ namespace CreateFile
                         // Deserializa el archivo utilizando el JsonSerializer
                         var obj = _serializer.Deserializable<String>(fileName); // Reemplaza 'TuTipo' con el tipo de objeto que estás deserializando
 
-                        // Muestra la información en los TextBox (o donde desees)
-                        txtAccount.Text = obj.ToString();
-                        txtFirstName.Text = obj.ToString();
-                        txtLastName.Text = obj.ToString();
-                        txtBalance.Text = obj.ToString();
-
-                        // Asigna otras propiedades de acuerdo a tu objeto
-
+                        if (obj != null)
+                        {
+                            // Asigna las propiedades del objeto a los TextBoxes correspondientes
+                            txtAccount.Text = obj.ToString();
+                            txtFirstName.Text = obj.ToString();
+                            txtLastName.Text = obj.ToString();
+                            txtBalance.Text = obj.ToString();
+                        }
+                        else
+                        {
+                            // Si obj es null, muestra un mensaje de error o maneja la situación de acuerdo a tus necesidades
+                            MessageBox.Show("El objeto deserializado es null.", "Error",
+                                             MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                         // Deshabilita el botón "Deserializar JSON" si es necesario
                         btnDeserializarJson.Enabled = false;
                     }
