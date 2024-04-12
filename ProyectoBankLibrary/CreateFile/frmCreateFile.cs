@@ -18,10 +18,9 @@ namespace CreateFile
     public partial class frmCreateFile : BankUIForm
     {
         private FileRepository? _fileRepository;
-
         List<Cliente> clientes = new List<Cliente>();
-
         private readonly Iserializer _serializer;
+
         public frmCreateFile()
         {
             InitializeComponent();
@@ -54,7 +53,6 @@ namespace CreateFile
                     {
                         _fileRepository = new FileRepository(fileName);
                         _fileRepository?.OpenOrCreateFile();
-
                         btnSave.Enabled = false;
                         btnEnter.Enabled = true;
                     }
@@ -72,17 +70,25 @@ namespace CreateFile
             Cliente cliente = new Cliente();
 
             cliente.firsName = txtFirstName.Text;
-            cliente.cuenta = int.Parse(txtAccount.Text);
             cliente.LastName = txtLastName.Text;
             cliente.saldo = double.Parse(txtBalance.Text, CultureInfo.InvariantCulture);
 
-            clientes.Add(cliente);
-
-            btnserializarXml.Enabled = true;
-            btnSerializarJson.Enabled = true;
-            ClearTextBoxes();
-            txtFirstName.Focus();
-
+            int cuenta;
+            if (int.TryParse(txtAccount.Text, out cuenta))
+            {
+                cliente.cuenta = cuenta;
+                clientes.Add(cliente);
+                btnserializarXml.Enabled = true;
+                btnSerializarJson.Enabled = true;
+                ClearTextBoxes();
+                txtFirstName.Focus();
+            }
+            else
+            {
+                txtAccount.Text = "El campo contiene letras";
+                txtAccount.SelectAll();
+                txtAccount.Focus();
+            }
         }
 
         private void ClearTextBoxes()
@@ -118,20 +124,18 @@ namespace CreateFile
 
         private void btnSerializarJson_Click(object sender, EventArgs e)
         {
-            
             DialogResult result;
             string fileName;
 
             using (var fileChooser = new SaveFileDialog())
             {
-                fileChooser.CheckFileExists = false; //Para crear archivo
+                fileChooser.CheckFileExists = false;
                 result = fileChooser.ShowDialog();
-                fileName = fileChooser.FileName; // nombre del archivo
+                fileName = fileChooser.FileName;
             }
 
             if (result == DialogResult.OK)
             {
-               
                 if (string.IsNullOrEmpty(fileName))
                 {
                     MessageBox.Show("Nombre de archivo inválido", "Error",
@@ -139,22 +143,17 @@ namespace CreateFile
                 }
                 else
                 {
-                    // Guardar con objeto EmpresaRepository
                     try
                     {
                         var jsonobjectserializer = new JsonObjectSerializer();
                         jsonobjectserializer.serializar(clientes, fileName);
-
-                        // deshabilita Serializar lista y habilita el boton Insertar
                         btnSerializarJson.Enabled = false;
                         btnEnter.Enabled = true;
-         
                         MessageBox.Show("Archivo serializado correctamente", string.Empty,
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        // notifica al usuario si el archivo existe
                         MessageBox.Show(ex.Message, "Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -164,21 +163,18 @@ namespace CreateFile
 
         private void btnserializarXml_Click(object sender, EventArgs e)
         {
-            
             DialogResult result;
             string fileName;
 
             using (var fileChooser = new SaveFileDialog())
             {
-                fileChooser.CheckFileExists = false; 
+                fileChooser.CheckFileExists = false;
                 result = fileChooser.ShowDialog();
-                fileName = fileChooser.FileName; 
+                fileName = fileChooser.FileName;
             }
 
-            
             if (result == DialogResult.OK)
             {
-                
                 if (string.IsNullOrEmpty(fileName))
                 {
                     MessageBox.Show("Nombre de archivo inválido", "Error",
@@ -186,13 +182,10 @@ namespace CreateFile
                 }
                 else
                 {
-                    // Guardar con EmpresaRepository
                     try
                     {
                         var xmlobjectserializer = new XmlObjectSerializer();
                         xmlobjectserializer.serializar(clientes, fileName);
-
-                        
                         btnSerializarJson.Enabled = false;
                         btnEnter.Enabled = true;
 
@@ -201,7 +194,6 @@ namespace CreateFile
                     }
                     catch (Exception ex)
                     {
-                      
                         MessageBox.Show(ex.Message, "Error",
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
@@ -221,18 +213,14 @@ namespace CreateFile
 
                     try
                     {
-                        // Deserializar el archivo JSON a una lista de clientes
                         List<Cliente> listaClientes = _serializer.Deserializable<List<Cliente>>(fileName);
 
                         if (listaClientes != null && listaClientes.Count > 0)
                         {
-                            // Limpiar el DataGridView antes de agregar nuevas filas
                             dgvDeserializar.Rows.Clear();
 
-                            // Iterar sobre cada cliente en la lista
                             foreach (Cliente cliente in listaClientes)
                             {
-                                // Agregar una nueva fila al DataGridView y asignar los valores directamente
                                 int rowIndex = dgvDeserializar.Rows.Add(
                                     cliente.cuenta.ToString(),
                                     cliente.firsName,
@@ -240,12 +228,9 @@ namespace CreateFile
                                     cliente.saldo.ToString()
                                 );
                             }
-
-                            // No es necesario establecer la lista de clientes como origen de datos del DataGridView
                         }
                         else
                         {
-                            // Si la lista de clientes está vacía
                             MessageBox.Show("El objeto deserializado es null o está vacío.", "Error",
                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
@@ -261,22 +246,18 @@ namespace CreateFile
             }
         }
 
-
-
         private void btnDeserializarXml_Click(object sender, EventArgs e)
         {
             using (OpenFileDialog fileChooser = new OpenFileDialog())
             {
                 DialogResult result = fileChooser.ShowDialog();
 
-                // Se asegura de que el usuario haya hecho clic en "Abrir"
                 if (result == DialogResult.OK)
                 {
                     string fileName = fileChooser.FileName;
-                   
+
                     try
                     {
-                     
                         List<Cliente> listaClientes;
                         XmlSerializer serializer = new XmlSerializer(typeof(List<Cliente>));
                         using (FileStream fs = new FileStream(fileName, FileMode.Open))
@@ -286,14 +267,10 @@ namespace CreateFile
 
                         if (listaClientes != null && listaClientes.Count > 0)
                         {
-
-                            // Limpiar el DataGridView antes de agregar nuevas filas
                             dgvDeserializar.Rows.Clear();
 
-                            // Iterar sobre cada cliente en la lista
                             foreach (Cliente cliente in listaClientes)
                             {
-                                // Agregar una nueva fila al DataGridView y asignar los valores directamente
                                 int rowIndex = dgvDeserializar.Rows.Add(
                                     cliente.cuenta.ToString(),
                                     cliente.firsName,
@@ -304,7 +281,6 @@ namespace CreateFile
                         }
                         else
                         {
-                           
                             MessageBox.Show("La lista de clientes está vacía.", "Error",
                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
