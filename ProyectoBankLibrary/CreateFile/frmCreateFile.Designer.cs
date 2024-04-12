@@ -106,6 +106,7 @@ namespace CreateFile
             btnDeserializarXml.TabIndex = 14;
             btnDeserializarXml.Text = "Deserializar Xml";
             btnDeserializarXml.UseVisualStyleBackColor = true;
+            btnDeserializarXml.Click += btnDeserializarXml_Click;
             // 
             // frmCreateFile
             // 
