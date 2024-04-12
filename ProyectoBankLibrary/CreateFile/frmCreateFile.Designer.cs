@@ -36,13 +36,19 @@ namespace CreateFile
             btnserializarXml = new Button();
             btnDeserializarJson = new Button();
             btnDeserializarXml = new Button();
+            dgvDeserializar = new DataGridView();
+            ClmNombre = new DataGridViewTextBoxColumn();
+            clmPrimerNombre = new DataGridViewTextBoxColumn();
+            clmApellido = new DataGridViewTextBoxColumn();
+            clmSaldo = new DataGridViewTextBoxColumn();
+            ((System.ComponentModel.ISupportInitialize)dgvDeserializar).BeginInit();
             SuspendLayout();
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(510, 12);
+            btnSave.Location = new Point(13, 481);
             btnSave.Name = "btnSave";
-            btnSave.Size = new Size(115, 34);
+            btnSave.Size = new Size(256, 34);
             btnSave.TabIndex = 8;
             btnSave.Text = "Guardar como";
             btnSave.UseVisualStyleBackColor = true;
@@ -50,9 +56,9 @@ namespace CreateFile
             // 
             // btnEnter
             // 
-            btnEnter.Location = new Point(510, 82);
+            btnEnter.Location = new Point(275, 401);
             btnEnter.Name = "btnEnter";
-            btnEnter.Size = new Size(115, 34);
+            btnEnter.Size = new Size(180, 74);
             btnEnter.TabIndex = 9;
             btnEnter.Text = "Ingresar";
             btnEnter.UseVisualStyleBackColor = true;
@@ -60,9 +66,9 @@ namespace CreateFile
             // 
             // btnExit
             // 
-            btnExit.Location = new Point(558, 234);
+            btnExit.Location = new Point(275, 481);
             btnExit.Name = "btnExit";
-            btnExit.Size = new Size(115, 34);
+            btnExit.Size = new Size(180, 34);
             btnExit.TabIndex = 10;
             btnExit.Text = "Salir";
             btnExit.UseVisualStyleBackColor = true;
@@ -70,7 +76,7 @@ namespace CreateFile
             // 
             // btnSerializarJson
             // 
-            btnSerializarJson.Location = new Point(33, 234);
+            btnSerializarJson.Location = new Point(13, 401);
             btnSerializarJson.Name = "btnSerializarJson";
             btnSerializarJson.Size = new Size(115, 34);
             btnSerializarJson.TabIndex = 11;
@@ -80,7 +86,7 @@ namespace CreateFile
             // 
             // btnserializarXml
             // 
-            btnserializarXml.Location = new Point(154, 234);
+            btnserializarXml.Location = new Point(13, 441);
             btnserializarXml.Name = "btnserializarXml";
             btnserializarXml.Size = new Size(115, 34);
             btnserializarXml.TabIndex = 12;
@@ -90,7 +96,7 @@ namespace CreateFile
             // 
             // btnDeserializarJson
             // 
-            btnDeserializarJson.Location = new Point(275, 234);
+            btnDeserializarJson.Location = new Point(134, 401);
             btnDeserializarJson.Name = "btnDeserializarJson";
             btnDeserializarJson.Size = new Size(135, 34);
             btnDeserializarJson.TabIndex = 13;
@@ -100,19 +106,49 @@ namespace CreateFile
             // 
             // btnDeserializarXml
             // 
-            btnDeserializarXml.Location = new Point(423, 234);
+            btnDeserializarXml.Location = new Point(134, 441);
             btnDeserializarXml.Name = "btnDeserializarXml";
-            btnDeserializarXml.Size = new Size(129, 34);
+            btnDeserializarXml.Size = new Size(135, 34);
             btnDeserializarXml.TabIndex = 14;
             btnDeserializarXml.Text = "Deserializar Xml";
             btnDeserializarXml.UseVisualStyleBackColor = true;
             btnDeserializarXml.Click += btnDeserializarXml_Click;
             // 
+            // dgvDeserializar
+            // 
+            dgvDeserializar.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dgvDeserializar.Columns.AddRange(new DataGridViewColumn[] { ClmNombre, clmPrimerNombre, clmApellido, clmSaldo });
+            dgvDeserializar.Location = new Point(13, 151);
+            dgvDeserializar.Name = "dgvDeserializar";
+            dgvDeserializar.Size = new Size(442, 244);
+            dgvDeserializar.TabIndex = 15;
+            // 
+            // ClmNombre
+            // 
+            ClmNombre.HeaderText = "Cuenta";
+            ClmNombre.Name = "ClmNombre";
+            // 
+            // clmPrimerNombre
+            // 
+            clmPrimerNombre.HeaderText = "Primer Nombre";
+            clmPrimerNombre.Name = "clmPrimerNombre";
+            // 
+            // clmApellido
+            // 
+            clmApellido.HeaderText = "Apellido";
+            clmApellido.Name = "clmApellido";
+            // 
+            // clmSaldo
+            // 
+            clmSaldo.HeaderText = "Saldo";
+            clmSaldo.Name = "clmSaldo";
+            // 
             // frmCreateFile
             // 
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(688, 305);
+            ClientSize = new Size(467, 527);
+            Controls.Add(dgvDeserializar);
             Controls.Add(btnDeserializarXml);
             Controls.Add(btnDeserializarJson);
             Controls.Add(btnserializarXml);
@@ -134,6 +170,8 @@ namespace CreateFile
             Controls.SetChildIndex(btnserializarXml, 0);
             Controls.SetChildIndex(btnDeserializarJson, 0);
             Controls.SetChildIndex(btnDeserializarXml, 0);
+            Controls.SetChildIndex(dgvDeserializar, 0);
+            ((System.ComponentModel.ISupportInitialize)dgvDeserializar).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -149,5 +187,10 @@ namespace CreateFile
         private Button btnserializarXml;
         private Button btnDeserializarJson;
         private Button btnDeserializarXml;
+        private DataGridView dgvDeserializar;
+        private DataGridViewTextBoxColumn ClmNombre;
+        private DataGridViewTextBoxColumn clmPrimerNombre;
+        private DataGridViewTextBoxColumn clmApellido;
+        private DataGridViewTextBoxColumn clmSaldo;
     }
 }

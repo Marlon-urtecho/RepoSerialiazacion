@@ -215,33 +215,41 @@ namespace CreateFile
             {
                 DialogResult result = fileChooser.ShowDialog();
 
-
                 if (result == DialogResult.OK)
                 {
                     string fileName = fileChooser.FileName;
-                   
+
                     try
                     {
-                        //
+                        // Deserializar el archivo JSON a una lista de clientes
                         List<Cliente> listaClientes = _serializer.Deserializable<List<Cliente>>(fileName);
 
                         if (listaClientes != null && listaClientes.Count > 0)
                         {
-                            
-                            Cliente cliente = listaClientes[0];
-                            
-                            txtAccount.Text = cliente.cuenta.ToString();
-                            txtFirstName.Text = cliente.firsName;
-                            txtLastName.Text = cliente.LastName;
-                            txtBalance.Text = cliente.saldo.ToString();
+                            // Limpiar el DataGridView antes de agregar nuevas filas
+                            dgvDeserializar.Rows.Clear();
+
+                            // Iterar sobre cada cliente en la lista
+                            foreach (Cliente cliente in listaClientes)
+                            {
+                                // Agregar una nueva fila al DataGridView y asignar los valores directamente
+                                int rowIndex = dgvDeserializar.Rows.Add(
+                                    cliente.cuenta.ToString(),
+                                    cliente.firsName,
+                                    cliente.LastName,
+                                    cliente.saldo.ToString()
+                                );
+                            }
+
+                            // No es necesario establecer la lista de clientes como origen de datos del DataGridView
                         }
                         else
                         {
-                            // si el objeto es nulo
-                            MessageBox.Show("El objeto deserializado es null.", "Error",
+                            // Si la lista de clientes está vacía
+                            MessageBox.Show("El objeto deserializado es null o está vacío.", "Error",
                                              MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
-                        
+
                         btnDeserializarJson.Enabled = false;
                     }
                     catch (Exception ex)
@@ -250,9 +258,10 @@ namespace CreateFile
                             MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-
             }
         }
+
+
 
         private void btnDeserializarXml_Click(object sender, EventArgs e)
         {
@@ -277,13 +286,21 @@ namespace CreateFile
 
                         if (listaClientes != null && listaClientes.Count > 0)
                         {
-                           
-                            Cliente cliente = listaClientes[0];
 
-                            txtAccount.Text = cliente.cuenta.ToString();
-                            txtFirstName.Text = cliente.firsName;
-                            txtLastName.Text = cliente.LastName;
-                            txtBalance.Text = cliente.saldo.ToString();
+                            // Limpiar el DataGridView antes de agregar nuevas filas
+                            dgvDeserializar.Rows.Clear();
+
+                            // Iterar sobre cada cliente en la lista
+                            foreach (Cliente cliente in listaClientes)
+                            {
+                                // Agregar una nueva fila al DataGridView y asignar los valores directamente
+                                int rowIndex = dgvDeserializar.Rows.Add(
+                                    cliente.cuenta.ToString(),
+                                    cliente.firsName,
+                                    cliente.LastName,
+                                    cliente.saldo.ToString()
+                                );
+                            }
                         }
                         else
                         {

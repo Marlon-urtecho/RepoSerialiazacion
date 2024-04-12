@@ -12,8 +12,8 @@ namespace CreateFile
     {
         //Atributos del cliente 
         public int cuenta {  get; set; }
-        public string firsName {  get; set; }
-        public string LastName { get; set; }
+        public string? firsName {  get; set; }
+        public string? LastName { get; set; }
         public double saldo {  get; set; }
 
     }
