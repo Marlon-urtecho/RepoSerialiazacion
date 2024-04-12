@@ -40,7 +40,7 @@ namespace CreateFile
             // 
             // btnSave
             // 
-            btnSave.Location = new Point(510, 6);
+            btnSave.Location = new Point(510, 12);
             btnSave.Name = "btnSave";
             btnSave.Size = new Size(115, 34);
             btnSave.TabIndex = 8;
@@ -50,7 +50,7 @@ namespace CreateFile
             // 
             // btnEnter
             // 
-            btnEnter.Location = new Point(510, 118);
+            btnEnter.Location = new Point(510, 82);
             btnEnter.Name = "btnEnter";
             btnEnter.Size = new Size(115, 34);
             btnEnter.TabIndex = 9;
@@ -122,6 +122,10 @@ namespace CreateFile
             Name = "frmCreateFile";
             Text = "frmCreateFile";
             Load += frmCreateFile_Load;
+            Controls.SetChildIndex(txtAccount, 0);
+            Controls.SetChildIndex(txtFirstName, 0);
+            Controls.SetChildIndex(txtLastName, 0);
+            Controls.SetChildIndex(txtBalance, 0);
             Controls.SetChildIndex(btnSave, 0);
             Controls.SetChildIndex(btnEnter, 0);
             Controls.SetChildIndex(btnExit, 0);

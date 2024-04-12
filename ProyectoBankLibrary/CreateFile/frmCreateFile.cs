@@ -82,7 +82,6 @@ namespace CreateFile
             ClearTextBoxes();
             txtFirstName.Focus();
 
-
         }
 
         private void ClearTextBoxes()
@@ -220,24 +219,28 @@ namespace CreateFile
             {
                 DialogResult result = fileChooser.ShowDialog();
 
+
                 // Se asegura de que el usuario haya hecho clic en "Abrir"
                 if (result == DialogResult.OK)
                 {
-                   string fileName = fileChooser.FileName; // Obtiene la ruta del archivo seleccionado
-
+                   string fileName = fileChooser.FileName;
                     // Resto del código para deserializar el archivo utilizando el JsonSerializer...
                     try
                     {
                         // Deserializa el archivo utilizando el JsonSerializer
-                        var obj = _serializer.Deserializable<String>(fileName); // Reemplaza 'TuTipo' con el tipo de objeto que estás deserializando
+                        // Deserializa el archivo utilizando el JsonSerializer
+                        List<Cliente> listaClientes = _serializer.Deserializable<List<Cliente>>(fileName);
 
-                        if (obj != null)
+                        if (listaClientes != null && listaClientes.Count > 0)
                         {
+                            // Seleccionamos el primer cliente de la lista para mostrar sus datos en los TextBoxes
+                            Cliente cliente = listaClientes[0];
+
                             // Asigna las propiedades del objeto a los TextBoxes correspondientes
-                            txtAccount.Text = obj.ToString();
-                            txtFirstName.Text = obj.ToString();
-                            txtLastName.Text = obj.ToString();
-                            txtBalance.Text = obj.ToString();
+                            txtAccount.Text = cliente.cuenta.ToString();
+                            txtFirstName.Text = cliente.firsName;
+                            txtLastName.Text = cliente.LastName;
+                            txtBalance.Text = cliente.saldo.ToString();
                         }
                         else
                         {
